@@ -15,9 +15,13 @@ module Fluent
       end.compact
     end
 
+    unless method_defined?(:router)
+      define_method("router") { Fluent::Engine }
+    end
+
     def emit(tag, es, chain)
       es.each do |time, record|
-        Engine.emit(@tag, time, format_record(record))
+        router.emit(@tag, time, format_record(record))
       end
 
       chain.next
