@@ -17,7 +17,7 @@ module Fluent
 
     def emit(tag, es, chain)
       es.each do |time, record|
-        Engine.emit(@tag, time, format_record(record))
+        route.emit(@tag, time, format_record(record))
       end
 
       chain.next
